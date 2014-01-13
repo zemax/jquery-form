@@ -1,25 +1,7 @@
 /**
  * $.form
- * 
- * @version 0.3
- * 
- * Params for validator object :
- * required : Boolean
- * type : String ('string', 'email', 'int', 'float', 'phone', 'mobile')
- * rangeLength : Array ([minLength:Number, maxLength:Number])
- * minLength : Number
- * maxLength : Number
- * equalTo : Number, String
- * rangeValue : Array ([minValue:Number, maxValue:Number])
- * minValue : Number
- * maxValue : Number
- * tipValue : Number, String
- * defaultValue : Number, String
- * errorMessage : String
- * errorContainer : String
- * 
- * Params not yet implemented :
- * lengthEqualTo : Number
+ *
+ * author ! Maxime Cousinou
  */
 (function($){
 	function delegate (method, instance) {	return function() {	return method.apply(instance, arguments); } }
