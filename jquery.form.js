@@ -1,7 +1,7 @@
 /**
  * $.form
  *
- * author ! Maxime Cousinou
+ * author Maxime Cousinou
  */
 (function($){
 	function delegate (method, instance) {	return function() {	return method.apply(instance, arguments); } }
