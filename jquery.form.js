@@ -3,7 +3,7 @@
  *
  * author Maxime Cousinou
  */
-(function($){
+(function($, undefined){
 	function delegate (method, instance) {	return function() {	return method.apply(instance, arguments); } }
 	
 	var default_options = {
