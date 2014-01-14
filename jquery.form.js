@@ -24,7 +24,7 @@
 	
 	function empty(str) {
 		return ( (str === undefined) || (str === null) || (str === false) || (str === "") || (str === 0) || (str === "0") );
-	};
+	}
 
 	function emptyOrTip(value, options) {
 		var ok = !empty(value);
@@ -39,7 +39,7 @@
 	function validateEmail(email) {
 		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(email);
-	};
+	}
 	
 	/****************************************************************************************************
 	 * MANAGER
@@ -128,9 +128,8 @@
 	
 	/**
 	 * addField
-	 * @param name_form
 	 * @param name
-	 * @param validator
+	 * @param options
 	 */
 	p.addField = function (name, options) {
 		options = $.extend({}, default_options, options);
@@ -154,7 +153,6 @@
 
 	/**
 	 * addSelect
-	 * @param name_form
 	 * @param name
 	 * @param options
 	 */
@@ -176,7 +174,6 @@
 
 	/**
 	 * addRadio
-	 * @param name_form
 	 * @param name
 	 * @param options
 	 */
@@ -200,9 +197,7 @@
 
 	/**
 	 * addRule
-	 * @param name_form
 	 * @param name
-	 * @param rule
 	 * @param options
 	 */
 	p.addRule = function (name, options) {
