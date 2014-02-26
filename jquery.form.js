@@ -9,7 +9,7 @@
 	var default_options = {
 		required: false,
 		validate: function(value, options) {
-			return !emptyOrTip(value, options);
+			return !FormManager.emptyOrTip(value, options);
 		},
 		fieldContainer: undefined,
 		errorMessage: 'Merci de renseigner ce champ correctement.',
@@ -17,29 +17,6 @@
 		tipValue: '',
 		defaultValue: ''
 	};
-	
-	/****************************************************************************************************
-	 * VALIDATOR
-	 ****************************************************************************************************/
-	
-	function empty(str) {
-		return ( (str === undefined) || (str === null) || (str === false) || (str === "") || (str === 0) || (str === "0") );
-	}
-
-	function emptyOrTip(value, options) {
-		var ok = !empty(value);
-
-		if (ok && !empty(options.tipValue)) {
-			ok = ok && (options.tipValue != value);
-		}
-
-		return !ok;
-	}
-	
-	function validateEmail(email) {
-		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(email);
-	}
 	
 	/****************************************************************************************************
 	 * MANAGER
@@ -54,8 +31,29 @@
 	
 	window.FormManager = window.FormManager || FormManager;
 		
-	FormManager.validateEmail = validateEmail;
-	
+	/****************************************************************************************************
+	 * VALIDATOR
+	 ****************************************************************************************************/
+
+	FormManager.empty = function (str) {
+		return ( (str === undefined) || (str === null) || (str === false) || (str === "") || (str === 0) || (str === "0") );
+	}
+
+	FormManager.emptyOrTip = function (value, options) {
+		var ok = !FormManager.empty(value);
+
+		if (ok && !FormManager.empty(options.tipValue)) {
+			ok = ok && (options.tipValue != value);
+		}
+
+		return !ok;
+	}
+
+	FormManager.validateEmail = function (email) {
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+
 	/****************************************************************************************************
 	 * INIT
 	 ****************************************************************************************************/
@@ -80,7 +78,7 @@
 	p.tipField = function (name, value) {
 		var o = $('input[name=' + name + ']', this.jForm);
 		
-		if (empty(o.val())) {
+		if (FormManager.empty(o.val())) {
 			o.val(value);
 		}
 		
@@ -242,7 +240,7 @@
 					break;
 			}
 
-			if ((options.required || !emptyOrTip(value, options)) && !options.validate(value, options)) {
+			if ((options.required || !FormManager.emptyOrTip(value, options)) && !options.validate(value, options)) {
 				ok = false;
 
 				if (options.errorContainer != undefined) {
