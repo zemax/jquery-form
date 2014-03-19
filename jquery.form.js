@@ -27,8 +27,6 @@
 		this.rules = [];
 
 		$.extend(this, options);
-
-		console.log(this);
 	}
 	
 	var p = FormManager.prototype;
