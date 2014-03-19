@@ -18,22 +18,26 @@
 		defaultValue: ''
 	};
 	
-	/****************************************************************************************************
+	/**************************************************
 	 * MANAGER
-	 ****************************************************************************************************/
+	 **************************************************/
 	
-	function FormManager (jForm) {
+	function FormManager (jForm, options) {
 		this.jForm = jForm;
 		this.rules = [];
+
+		$.extend(this, options);
+
+		console.log(this);
 	}
 	
 	var p = FormManager.prototype;
 	
 	window.FormManager = window.FormManager || FormManager;
 		
-	/****************************************************************************************************
+	/**************************************************
 	 * VALIDATOR
-	 ****************************************************************************************************/
+	 **************************************************/
 
 	FormManager.empty = function (str) {
 		return ( (str === undefined) || (str === null) || (str === false) || (str === "") || (str === 0) || (str === "0") );
@@ -54,9 +58,9 @@
 		return re.test(email);
 	}
 
-	/****************************************************************************************************
+	/**************************************************
 	 * INIT
-	 ****************************************************************************************************/
+	 **************************************************/
 	
 	/**
 	 * initField
@@ -120,9 +124,9 @@
 		return (this);
 	};
 
-	/****************************************************************************************************
+	/**************************************************
 	 * RULES
-	 ****************************************************************************************************/
+	 **************************************************/
 	
 	/**
 	 * addField
@@ -131,9 +135,23 @@
 	 */
 	p.addField = function (name, options) {
 		options = $.extend({}, default_options, options);
-		
-		this.tipField(name, options.tipValue);
-		
+
+		var $f = $('[name=' + name + ']', this.jForm );
+		var placeholder = $f.attr('placeholder');
+
+		if ('placeholder' in document.createElement("input")) {
+			if (!placeholder && options.tipValue) {
+				$f.attr('placeholder', options.tipValue);
+			}
+		}
+		else {
+			if (placeholder && !options.tipValue) {
+				options.tipValue = placeholder;
+			}
+
+			this.tipField(name, options.tipValue);
+		}
+
 		if (options.defaultValue !== '') {
 			this.initField(name, options.defaultValue);
 		}
@@ -200,7 +218,8 @@
 	 */
 	p.addRule = function (name, options) {
 		options = $.extend({}, default_options, options);
-		
+		options.required = true;
+
 		var r = {
 				name: name,
 				type: 'rule',
@@ -212,9 +231,9 @@
 		return (this);
 	};
 
-	/****************************************************************************************************
+	/**************************************************
 	 * CHECK
-	 ****************************************************************************************************/
+	 **************************************************/
 	
 	p.check = function (e) {
 		var ok = true;
@@ -280,15 +299,17 @@
 	 * jQuery
 	 **************************************************************************/
 	
-	$.fn.form = function() {
+	$.fn.form = function(options) {
+		options = $.extend({}, options);
+
 		var dom = this.get(0);
 		
 		if (dom === undefined) {
-			return new FormManager(null);
+			return new FormManager(null, options);
 		}
 		
 		if (dom.formManager === undefined) {
-			dom.formManager = new FormManager(this);
+			dom.formManager = new FormManager(this, options);
 			
 			this.submit(delegate(dom.formManager.check, dom.formManager));
 		}
