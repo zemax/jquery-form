@@ -5,7 +5,7 @@
  */
 (function (factory) {
 	if ( typeof exports === 'object' ) {
-		module.exports = factory(require('jquery'));
+		module.exports = factory(jQuery);
 	} else {
 		factory(jQuery);
 	}
