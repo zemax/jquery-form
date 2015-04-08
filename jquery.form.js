@@ -294,6 +294,8 @@
 					break;
 			}
 
+			options.currentStatus = ok;
+
 			if ( (options.required || !FormManager.emptyOrTip(value, options)) && !options.validate(value, options) ) {
 				ok = false;
 
